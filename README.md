@@ -82,6 +82,3 @@ Syntaxis/
 - Python 3.7 or higher
 - No external dependencies
 
-## License
-
-
