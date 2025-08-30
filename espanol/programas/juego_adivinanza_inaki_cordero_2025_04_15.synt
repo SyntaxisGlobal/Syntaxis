@@ -1,0 +1,117 @@
+# Juego de Adivinanza - Iñaki Cordero
+# Fecha: 2025-04-15
+# Descripción: Juego simple de adivinanza de números
+
+importar random
+
+definir generar_numero_secreto():
+    """Genera un número secreto aleatorio entre 1 y 100"""
+    retornar random.randint(1, 100)
+
+definir mostrar_bienvenida():
+    """Muestra la bienvenida al juego"""
+    print("🎮" + "=" * 50)
+    print("    JUEGO DE ADIVINANZA")
+    print("=" * 50)
+    print("🎯 Adivina el número secreto entre 1 y 100")
+    print("💡 Te daré pistas para ayudarte")
+    print("🏆 ¡Intenta adivinarlo en la menor cantidad de intentos!")
+    print("=" * 50)
+
+definir obtener_intento():
+    """Obtiene el intento del usuario"""
+    mientras verdadero:
+        try:
+            intento = entero(entrada("🎲 Ingresa tu número (1-100): "))
+            si 1 <= intento <= 100:
+                retornar intento
+            sino:
+                imprimir("❌ El número debe estar entre 1 y 100")
+        except ValueError:
+            imprimir("❌ Error: Por favor ingresa un número válido")
+
+definir dar_pista(intento, numero_secreto):
+    """Da una pista al usuario sobre su intento"""
+    diferencia = abs(intento - numero_secreto)
+    
+    si intento < numero_secreto:
+        si diferencia <= 5:
+            imprimir("🔥 ¡Muy cerca! El número es mayor")
+        sino_si diferencia <= 15:
+            imprimir("📈 El número es mayor")
+        sino:
+            imprimir("⬆️  El número es mucho mayor")
+    sino:
+        si diferencia <= 5:
+            imprimir("🔥 ¡Muy cerca! El número es menor")
+        sino_si diferencia <= 15:
+            imprimir("📉 El número es menor")
+        sino:
+            imprimir("⬇️  El número es mucho menor")
+
+definir mostrar_estadisticas(intentos, tiempo_inicio):
+    """Muestra las estadísticas del juego"""
+    print("\n" + "🏆" + "=" * 40)
+    print("    ¡FELICIDADES! ¡HAS GANADO!")
+    print("=" * 40)
+    print(f"🎯 Número de intentos: {intentos}")
+    
+    # Calcular calificación basada en intentos
+    si intentos <= 5:
+        calificacion = "🌟 ¡EXCELENTE! Eres un maestro de la adivinanza"
+    sino_si intentos <= 10:
+        calificacion = "⭐ ¡MUY BIEN! Tienes buen instinto"
+    sino_si intentos <= 15:
+        calificacion = "👍 ¡BIEN! Con práctica mejorarás"
+    sino:
+        calificacion = "💪 ¡Buen esfuerzo! La próxima vez será mejor"
+    
+    print(f"📊 Calificación: {calificacion}")
+    print("=" * 40)
+
+definir jugar_partida():
+    """Juega una partida completa"""
+    numero_secreto = generar_numero_secreto()
+    intentos = 0
+    max_intentos = 20
+    
+    mostrar_bienvenida()
+    
+    mientras intentos < max_intentos:
+        intentos += 1
+        imprimir(f"\n🎯 Intento #{intentos}")
+        
+        intento_usuario = obtener_intento()
+        
+        si intento_usuario == numero_secreto:
+            mostrar_estadisticas(intentos, 0)
+            retornar verdadero
+        sino:
+            dar_pista(intento_usuario, numero_secreto)
+            
+            intentos_restantes = max_intentos - intentos
+            si intentos_restantes > 0:
+                imprimir(f"⏰ Intentos restantes: {intentos_restantes}")
+            sino:
+                imprimir("⏰ ¡Último intento!")
+    
+    # Si se acabaron los intentos
+    imprimir(f"\n💀 ¡GAME OVER! Se acabaron los intentos")
+    imprimir(f"🎯 El número secreto era: {numero_secreto}")
+    retornar falso
+
+definir main():
+    """Función principal del juego"""
+    imprimir("🎮 ¡Bienvenido al Juego de Adivinanza de Syntaxis!")
+    
+    mientras verdadero:
+        resultado = jugar_partida()
+        
+        # Preguntar si quiere jugar otra vez
+        jugar_otra_vez = entrada("\n🎮 ¿Quieres jugar otra vez? (s/n): ").lower().strip()
+        si jugar_otra_vez no en ['s', 'si', 'sí', 'y', 'yes']:
+            imprimir("👋 ¡Gracias por jugar! ¡Hasta luego!")
+            romper
+
+si __name__ == "__main__":
+    main()

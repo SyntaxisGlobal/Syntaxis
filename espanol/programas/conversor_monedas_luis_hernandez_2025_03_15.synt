@@ -1,0 +1,125 @@
+# Conversor de Monedas - Luis Hernández
+# Fecha: 2025-03-15
+# Descripción: Conversor de monedas con tasas de cambio predefinidas
+
+# Tasas de cambio (ejemplo - en la vida real se actualizarían automáticamente)
+TASAS_CAMBIO = {
+    "USD": 1.0,      # Dólar estadounidense (base)
+    "EUR": 0.85,     # Euro
+    "GBP": 0.73,     # Libra esterlina
+    "JPY": 110.0,    # Yen japonés
+    "MXN": 20.0,     # Peso mexicano
+    "CAD": 1.25,     # Dólar canadiense
+    "AUD": 1.35,     # Dólar australiano
+    "CHF": 0.92      # Franco suizo
+}
+
+definir mostrar_monedas_disponibles():
+    """Muestra las monedas disponibles para conversión"""
+    print("=" * 40)
+    print("    MONEDAS DISPONIBLES")
+    print("=" * 40)
+    for i, moneda in enumerate(TASAS_CAMBIO.keys(), 1):
+        print(f"{i}. {moneda}")
+    print("=" * 40)
+
+definir obtener_moneda_entrada():
+    """Obtiene la moneda de entrada del usuario"""
+    mientras verdadero:
+        try:
+            mostrar_monedas_disponibles()
+            opcion = entero(entrada("Selecciona la moneda de entrada (1-8): "))
+            si 1 <= opcion <= 8:
+                monedas = lista(TASAS_CAMBIO.keys())
+                retornar monedas[opcion - 1]
+            sino:
+                imprimir("❌ Opción inválida. Por favor selecciona 1-8.")
+        except ValueError:
+            imprimir("❌ Error: Por favor ingresa un número válido")
+
+definir obtener_moneda_salida(moneda_entrada):
+    """Obtiene la moneda de salida del usuario"""
+    mientras verdadero:
+        try:
+            mostrar_monedas_disponibles()
+            imprimir(f"Moneda de entrada seleccionada: {moneda_entrada}")
+            opcion = entero(entrada("Selecciona la moneda de salida (1-8): "))
+            si 1 <= opcion <= 8:
+                monedas = lista(TASAS_CAMBIO.keys())
+                moneda_salida = monedas[opcion - 1]
+                si moneda_salida == moneda_entrada:
+                    imprimir("❌ La moneda de salida debe ser diferente a la de entrada")
+                    continuar
+                retornar moneda_salida
+            sino:
+                imprimir("❌ Opción inválida. Por favor selecciona 1-8.")
+        except ValueError:
+            imprimir("❌ Error: Por favor ingresa un número válido")
+
+definir obtener_cantidad():
+    """Obtiene la cantidad a convertir del usuario"""
+    mientras verdadero:
+        try:
+            cantidad = flotante(entrada("Ingresa la cantidad a convertir: "))
+            si cantidad > 0:
+                retornar cantidad
+            sino:
+                imprimir("❌ La cantidad debe ser mayor a 0")
+        except ValueError:
+            imprimir("❌ Error: Por favor ingresa un número válido")
+
+definir convertir_moneda(cantidad, moneda_entrada, moneda_salida):
+    """Convierte la cantidad de una moneda a otra"""
+    # Convertir a USD primero (moneda base)
+    cantidad_usd = cantidad / TASAS_CAMBIO[moneda_entrada]
+    
+    # Convertir de USD a la moneda de salida
+    cantidad_final = cantidad_usd * TASAS_CAMBIO[moneda_salida]
+    
+    retornar cantidad_final
+
+definir mostrar_resultado(cantidad, moneda_entrada, moneda_salida, resultado):
+    """Muestra el resultado de la conversión"""
+    print("\n" + "=" * 50)
+    print("    RESULTADO DE LA CONVERSIÓN")
+    print("=" * 50)
+    print(f"💰 {cantidad} {moneda_entrada} = {resultado:.2f} {moneda_salida}")
+    print(f"📊 Tasa de cambio: 1 {moneda_entrada} = {TASAS_CAMBIO[moneda_salida]/TASAS_CAMBIO[moneda_entrada]:.4f} {moneda_salida}")
+    print("=" * 50)
+
+definir main():
+    """Función principal del conversor de monedas"""
+    imprimir("💱 ¡Bienvenido al Conversor de Monedas de Syntaxis!")
+    imprimir("💡 Nota: Las tasas de cambio son ejemplos y se actualizan regularmente")
+    
+    mientras verdadero:
+        try:
+            # Obtener moneda de entrada
+            moneda_entrada = obtener_moneda_entrada()
+            
+            # Obtener moneda de salida
+            moneda_salida = obtener_moneda_salida(moneda_entrada)
+            
+            # Obtener cantidad
+            cantidad = obtener_cantidad()
+            
+            # Realizar conversión
+            resultado = convertir_moneda(cantidad, moneda_entrada, moneda_salida)
+            
+            # Mostrar resultado
+            mostrar_resultado(cantidad, moneda_entrada, moneda_salida, resultado)
+            
+            # Preguntar si continuar
+            continuar = entrada("\n¿Deseas hacer otra conversión? (s/n): ").lower().strip()
+            si continuar no en ['s', 'si', 'sí', 'y', 'yes']:
+                imprimir("👋 ¡Hasta luego!")
+                romper
+                
+        except KeyboardInterrupt:
+            imprimir("\n\n👋 ¡Hasta luego!")
+            romper
+        except Exception as e:
+            imprimir(f"❌ Error inesperado: {e}")
+
+si __name__ == "__main__":
+    main()

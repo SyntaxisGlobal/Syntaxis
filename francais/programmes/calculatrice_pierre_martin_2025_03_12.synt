@@ -1,0 +1,103 @@
+# Calculatrice - Pierre Martin
+# Date: 2025-03-12
+# Description: Calculatrice basique avec opérations mathématiques
+
+definir afficher_menu():
+    """Affiche le menu des opérations disponibles"""
+    print("=" * 30)
+    print("    CALCULATRICE BASIQUE")
+    print("=" * 30)
+    print("1. Addition")
+    print("2. Soustraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Puissance")
+    print("6. Quitter")
+    print("=" * 30)
+
+definir obtenir_nombres():
+    """Obtient deux nombres de l'utilisateur"""
+    try:
+        num1 = flottant(entree("Entrez le premier nombre: "))
+        num2 = flottant(entree("Entrez le deuxième nombre: "))
+        retourner num1, num2
+    except ValueError:
+        afficher("❌ Erreur: Veuillez entrer des nombres valides")
+        retourner rien, rien
+
+definir addition(a, b):
+    """Effectue l'addition de deux nombres"""
+    resultat = a + b
+    afficher(f"📊 {a} + {b} = {resultat}")
+    retourner resultat
+
+definir soustraction(a, b):
+    """Effectue la soustraction de deux nombres"""
+    resultat = a - b
+    afficher(f"📊 {a} - {b} = {resultat}")
+    retourner resultat
+
+definir multiplication(a, b):
+    """Effectue la multiplication de deux nombres"""
+    resultat = a * b
+    afficher(f"📊 {a} × {b} = {resultat}")
+    retourner resultat
+
+definir division(a, b):
+    """Effectue la division de deux nombres"""
+    si b == 0:
+        afficher("❌ Erreur: Impossible de diviser par zéro")
+        retourner rien
+    resultat = a / b
+    afficher(f"📊 {a} ÷ {b} = {resultat}")
+    retourner resultat
+
+definir puissance(a, b):
+    """Calcule la puissance d'un nombre"""
+    resultat = a ** b
+    afficher(f"📊 {a} ^ {b} = {resultat}")
+    retourner resultat
+
+definir main():
+    """Fonction principale de la calculatrice"""
+    afficher("🧮 Bienvenue à la Calculatrice de Syntaxis!")
+    
+    tant_que vrai:
+        afficher_menu()
+        
+        try:
+            option = entree("Sélectionnez une opération (1-6): ").strip()
+            
+            si option == "6":
+                afficher("👋 Au revoir!")
+                casser
+                
+            si option dans ["1", "2", "3", "4", "5"]:
+                num1, num2 = obtenir_nombres()
+                
+                si num1 est rien ou num2 est rien:
+                    continuer
+                
+                si option == "1":
+                    addition(num1, num2)
+                sinon_si option == "2":
+                    soustraction(num1, num2)
+                sinon_si option == "3":
+                    multiplication(num1, num2)
+                sinon_si option == "4":
+                    division(num1, num2)
+                sinon_si option == "5":
+                    puissance(num1, num2)
+            sinon:
+                afficher("❌ Option invalide. Veuillez sélectionner 1-6.")
+                
+        except KeyboardInterrupt:
+            afficher("\n\n👋 Au revoir!")
+            casser
+        except Exception as e:
+            afficher(f"❌ Erreur inattendue: {e}")
+        
+        entree("\nAppuyez sur Entrée pour continuer...")
+
+si __name__ == "__main__":
+    main()

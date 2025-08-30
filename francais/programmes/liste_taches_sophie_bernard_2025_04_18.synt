@@ -1,0 +1,153 @@
+# Liste de Tâches - Sophie Bernard
+# Date: 2025-04-18
+# Description: Gestionnaire de tâches simple
+
+# Liste globale pour almacenar las tareas
+taches = []
+
+definir afficher_menu():
+    """Affiche le menu principal"""
+    print("=" * 40)
+    print("    GESTIONNAIRE DE TÂCHES")
+    print("=" * 40)
+    print("1. Ajouter une tâche")
+    print("2. Voir toutes les tâches")
+    print("3. Marquer une tâche comme terminée")
+    print("4. Supprimer une tâche")
+    print("5. Quitter")
+    print("=" * 40)
+
+definir ajouter_tache():
+    """Ajoute une nouvelle tâche"""
+    titre = entree("Entrez le titre de la tâche: ").strip()
+    si no titre:
+        afficher("❌ Le titre ne peut pas être vide")
+        retourner
+    
+    description = entree("Entrez la description (optionnel): ").strip()
+    priorite = entree("Entrez la priorité (1-Haute, 2-Moyenne, 3-Basse): ").strip()
+    
+    # Valider la priorité
+    si priorite == "1":
+        priorite = "Haute"
+    sinon_si priorite == "2":
+        priorite = "Moyenne"
+    sinon_si priorite == "3":
+        priorite = "Basse"
+    sinon:
+        priorite = "Moyenne"
+    
+    # Crear la nueva tarea
+    nouvelle_tache = {
+        "id": longueur(taches) + 1,
+        "titre": titre,
+        "description": description,
+        "priorite": priorite,
+        "terminee": faux,
+        "date_creation": "2025-04-18"  # En la vida real sería datetime.now()
+    }
+    
+    taches.append(nouvelle_tache)
+    afficher(f"✅ Tâche '{titre}' ajoutée avec succès!")
+
+definir voir_taches():
+    """Muestra todas las tareas"""
+    si no taches:
+        afficher("📝 Aucune tâche trouvée")
+        retourner
+    
+    print("\n" + "=" * 60)
+    print("    LISTE DES TÂCHES")
+    print("=" * 60)
+    
+    pour tache dans taches:
+        statut = "✅" si tache["terminee"] sinon "⏳"
+        priorite_emoji = "🔴" si tache["priorite"] == "Haute" sinon "🟡" si tache["priorite"] == "Moyenne" sinon "🟢"
+        
+        print(f"{statut} ID: {tache['id']} | {priorite_emoji} {tache['priorite']}")
+        print(f"   Titre: {tache['titre']}")
+        si tache['description']:
+            print(f"   Description: {tache['description']}")
+        print(f"   Créée le: {tache['date_creation']}")
+        print("-" * 40)
+
+definir marquer_terminee():
+    """Marca una tarea como completada"""
+    si no taches:
+        afficher("📝 Aucune tâche trouvée")
+        retourner
+    
+    voir_taches()
+    try:
+        id_tache = entier(entree("Entrez l'ID de la tâche à marquer comme terminée: "))
+        
+        pour tache dans taches:
+            si tache["id"] == id_tache:
+                si tache["terminee"]:
+                    afficher("ℹ️  Cette tâche est déjà marquée comme terminée")
+                sinon:
+                    tache["terminee"] = vrai
+                    afficher(f"✅ Tâche '{tache['titre']}' marquée comme terminée!")
+                retourner
+        
+        afficher("❌ ID de tâche non trouvé")
+        
+    except ValueError:
+        afficher("❌ Veuillez entrer un ID valide")
+
+definir supprimer_tache():
+    """Elimina una tarea"""
+    si no taches:
+        afficher("📝 Aucune tâche trouvée")
+        retourner
+    
+    voir_taches()
+    try:
+        id_tache = entier(entree("Entrez l'ID de la tâche à supprimer: "))
+        
+        pour i, tache dans enumerate(taches):
+            si tache["id"] == id_tache:
+                titre = tache["titre"]
+                del taches[i]
+                afficher(f"🗑️  Tâche '{titre}' supprimée avec succès!")
+                retourner
+        
+        afficher("❌ ID de tâche non trouvé")
+        
+    except ValueError:
+        afficher("❌ Veuillez entrer un ID valide")
+
+definir main():
+    """Fonction principale"""
+    afficher("📋 Bienvenue au Gestionnaire de Tâches de Syntaxis!")
+    
+    tant_que vrai:
+        afficher_menu()
+        
+        try:
+            option = entree("Sélectionnez une option (1-5): ").strip()
+            
+            si option == "1":
+                ajouter_tache()
+            sinon_si option == "2":
+                voir_taches()
+            sinon_si option == "3":
+                marquer_terminee()
+            sinon_si option == "4":
+                supprimer_tache()
+            sinon_si option == "5":
+                afficher("👋 Au revoir!")
+                romper
+            sinon:
+                afficher("❌ Option invalide. Veuillez sélectionner 1-5.")
+                
+        except KeyboardInterrupt:
+            afficher("\n\n👋 Au revoir!")
+            romper
+        except Exception as e:
+            afficher(f"❌ Erreur inattendue: {e}")
+        
+        entree("\nAppuyez sur Entrée pour continuer...")
+
+si __name__ == "__main__":
+    main()

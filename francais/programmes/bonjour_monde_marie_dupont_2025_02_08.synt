@@ -1,3 +1,5 @@
+
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
@@ -198,6 +200,24 @@ definir menu_interactif():
         sinon:
             afficher("Option invalide. Veuillez choisir entre 1 et 6.")
 
-# Exécuter le programme
+# Programme Bonjour Monde - Marie Dupont
+# Date: 2025-02-08
+# Description: Programme de base d'introduction à Syntaxis
+
+# Définir fonction principale
+definir bonjour_monde():
+    """Fonction qui affiche un message de bienvenue"""
+    afficher("Bonjour Monde depuis Syntaxis!")
+    afficher("Bienvenue à la programmation en français")
+    afficher("Ceci est votre premier programme utilisant Syntaxis")
+    
+    # Obtenir le nom de l'utilisateur
+    nom = entree("Quel est votre nom? ")
+    
+    # Afficher un message personnalisé
+    afficher(f"Ravi de vous rencontrer, {nom}!")
+    afficher("Commençons à programmer!")
+
+# Exécuter le programme principal
 si __name__ == "__main__":
-    menu_interactif()
+    bonjour_monde()

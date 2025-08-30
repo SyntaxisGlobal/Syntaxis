@@ -1,0 +1,235 @@
+# Gestor de Notas - Soraya Morales
+# Fecha: 2025-07-25
+# Descripción: Gestor de notas con funcionalidades básicas
+
+# Lista global para almacenar las notas
+notas = []
+
+definir mostrar_menu():
+    """Muestra el menú principal del gestor"""
+    print("=" * 40)
+    print("    GESTOR DE NOTAS")
+    print("=" * 40)
+    print("1. Crear nueva nota")
+    print("2. Ver todas las notas")
+    print("3. Ver nota específica")
+    print("4. Editar nota")
+    print("5. Eliminar nota")
+    print("6. Buscar notas")
+    print("7. Salir")
+    print("=" * 40)
+
+definir crear_nota():
+    """Crea una nueva nota"""
+    print("\n📝 CREAR NUEVA NOTA")
+    print("-" * 30)
+    
+    titulo = entrada("Título: ").strip()
+    si no titulo:
+        imprimir("❌ El título no puede estar vacío")
+        retornar
+    
+    contenido = entrada("Contenido (presiona Enter dos veces para terminar):\n").strip()
+    si no contenido:
+        imprimir("❌ El contenido no puede estar vacío")
+        retornar
+    
+    # Obtener más líneas de contenido
+    lineas = [contenido]
+    mientras verdadero:
+        linea = entrada()
+        si linea == "":
+            romper
+        lineas.append(linea)
+    
+    contenido_completo = "\n".join(lineas)
+    
+    # Crear la nueva nota
+    nueva_nota = {
+        "id": longitud(notas) + 1,
+        "titulo": titulo,
+        "contenido": contenido_completo,
+        "fecha_creacion": "2025-07-25",  # En la vida real sería datetime.now()
+        "fecha_modificacion": "2025-07-25"
+    }
+    
+    notas.append(nueva_nota)
+    imprimir(f"✅ Nota '{titulo}' creada exitosamente!")
+
+definir ver_notas():
+    """Muestra todas las notas"""
+    si no notas:
+        imprimir("📝 No hay notas registradas")
+        retornar
+    
+    print("\n" + "📚" + "=" * 60)
+    print("    LISTA DE NOTAS")
+    print("=" * 60)
+    
+    para nota en notas:
+        print(f"🆔 ID: {nota['id']}")
+        print(f"📖 Título: {nota['titulo']}")
+        print(f"📅 Creada: {nota['fecha_creacion']}")
+        print(f"✏️  Modificada: {nota['fecha_modificacion']}")
+        print("-" * 40)
+
+definir ver_nota_especifica():
+    """Muestra una nota específica por ID"""
+    si no notas:
+        imprimir("📝 No hay notas para mostrar")
+        retornar
+    
+    ver_notas()
+    try:
+        id_nota = entero(entrada("🆔 Ingresa el ID de la nota a ver: "))
+        
+        para nota en notas:
+            si nota['id'] == id_nota:
+                print("\n" + "📖" + "=" * 60)
+                print(f"    {nota['titulo'].upper()}")
+                print("=" * 60)
+                print(f"📅 Creada: {nota['fecha_creacion']}")
+                print(f"✏️  Modificada: {nota['fecha_modificacion']}")
+                print("-" * 60)
+                print("📝 CONTENIDO:")
+                print(nota['contenido'])
+                print("=" * 60)
+                retornar
+        
+        imprimir("❌ ID de nota no encontrado")
+        
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa un ID válido")
+
+definir editar_nota():
+    """Edita una nota existente"""
+    si no notas:
+        imprimir("📝 No hay notas para editar")
+        retornar
+    
+    ver_notas()
+    try:
+        id_nota = entero(entrada("🆔 Ingresa el ID de la nota a editar: "))
+        
+        para nota en notas:
+            si nota['id'] == id_nota:
+                print(f"\n✏️  Editando nota: {nota['titulo']}")
+                print("-" * 30)
+                
+                titulo = entrada(f"Título ({nota['titulo']}): ").strip()
+                si titulo:
+                    nota['titulo'] = titulo
+                
+                print("Contenido actual:")
+                print(nota['contenido'])
+                print("\nNuevo contenido (presiona Enter dos veces para terminar):")
+                
+                contenido = entrada().strip()
+                si contenido:
+                    lineas = [contenido]
+                    mientras verdadero:
+                        linea = entrada()
+                        si linea == "":
+                            romper
+                        lineas.append(linea)
+                    
+                    nota['contenido'] = "\n".join(lineas)
+                
+                nota['fecha_modificacion'] = "2025-07-25"  # En la vida real sería datetime.now()
+                imprimir("✅ Nota actualizada exitosamente!")
+                retornar
+        
+        imprimir("❌ ID de nota no encontrado")
+        
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa un ID válido")
+
+definir eliminar_nota():
+    """Elimina una nota"""
+    si no notas:
+        imprimir("📝 No hay notas para eliminar")
+        retornar
+    
+    ver_notas()
+    try:
+        id_nota = entero(entrada("🆔 Ingresa el ID de la nota a eliminar: "))
+        
+        para i, nota en enumerate(notas):
+            si nota['id'] == id_nota:
+                titulo = nota['titulo']
+                confirmacion = entrada(f"⚠️  ¿Estás seguro de eliminar '{titulo}'? (s/n): ").lower().strip()
+                si confirmacion en ['s', 'si', 'sí', 'y', 'yes']:
+                    del notas[i]
+                    imprimir(f"🗑️  Nota '{titulo}' eliminada exitosamente!")
+                sino:
+                    imprimir("❌ Eliminación cancelada")
+                retornar
+        
+        imprimir("❌ ID de nota no encontrado")
+        
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa un ID válido")
+
+definir buscar_notas():
+    """Busca notas por título o contenido"""
+    si no notas:
+        imprimir("📝 No hay notas para buscar")
+        retornar
+    
+    termino = entrada("🔍 Ingresa el término a buscar: ").strip().lower()
+    si no termino:
+        imprimir("❌ Término de búsqueda vacío")
+        retornar
+    
+    encontradas = []
+    para nota en notas:
+        si (termino en nota['titulo'].lower() o 
+            termino en nota['contenido'].lower()):
+            encontradas.append(nota)
+    
+    si encontradas:
+        print(f"\n🔍 Se encontraron {longitud(encontradas)} nota(s):")
+        print("=" * 50)
+        para nota en encontradas:
+            print(f"📖 {nota['titulo']} (ID: {nota['id']})")
+    sino:
+        imprimir("❌ No se encontraron notas")
+
+definir main():
+    """Función principal del gestor de notas"""
+    imprimir("📚 ¡Bienvenido al Gestor de Notas de Syntaxis!")
+    
+    mientras verdadero:
+        mostrar_menu()
+        
+        try:
+            opcion = entrada("\nSelecciona una opción (1-7): ").strip()
+            
+            si opcion == "1":
+                crear_nota()
+            sino_si opcion == "2":
+                ver_notas()
+            sino_si opcion == "3":
+                ver_nota_especifica()
+            sino_si opcion == "4":
+                editar_nota()
+            sino_si opcion == "5":
+                eliminar_nota()
+            sino_si opcion == "6":
+                buscar_notas()
+            sino_si opcion == "7":
+                imprimir("👋 ¡Hasta luego!")
+                romper
+            sino:
+                imprimir("❌ Opción inválida. Por favor selecciona 1-7.")
+                
+        except KeyboardInterrupt:
+            imprimir("\n\n👋 ¡Hasta luego!")
+            romper
+        except Exception as e:
+            imprimir(f"❌ Error inesperado: {e}")
+        
+        entrada("\nPresiona Enter para continuar...")
+
+si __name__ == "__main__":
+    main()

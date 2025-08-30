@@ -1,0 +1,21 @@
+# Programa Hola Mundo - Leandro Villaseñor
+# Fecha: 2025-02-07
+# Descripción: Programa básico de introducción a Syntaxis
+
+# Definir función principal
+definir hola_mundo():
+    """Función que muestra un mensaje de bienvenida"""
+    imprimir("¡Hola Mundo desde Syntaxis!")
+    imprimir("Bienvenido a la programación en español")
+    imprimir("Este es tu primer programa usando Syntaxis")
+    
+    # Obtener nombre del usuario
+    nombre = entrada("¿Cuál es tu nombre? ")
+    
+    # Mostrar mensaje personalizado
+    imprimir(f"¡Encantado de conocerte, {nombre}!")
+    imprimir("¡Comencemos a programar!")
+
+# Ejecutar programa principal
+si __name__ == "__main__":
+    hola_mundo()

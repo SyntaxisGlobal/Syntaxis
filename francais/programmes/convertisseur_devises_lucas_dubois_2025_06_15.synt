@@ -1,0 +1,125 @@
+# Convertisseur de Devises - Lucas Dubois
+# Date: 2025-06-15
+# Description: Convertisseur de devises avec taux de change prédéfinis
+
+# Taux de change (exemple - dans la vie réelle ils seraient mis à jour automatiquement)
+TAUX_CHANGE = {
+    "EUR": 1.0,      # Euro (base)
+    "USD": 1.18,     # Dollar américain
+    "GBP": 0.86,     # Livre sterling
+    "JPY": 130.0,    # Yen japonais
+    "CHF": 1.08,     # Franc suisse
+    "CAD": 1.47,     # Dollar canadien
+    "AUD": 1.59,     # Dollar australien
+    "CNY": 7.65      # Yuan chinois
+}
+
+definir afficher_devises_disponibles():
+    """Affiche les devises disponibles pour la conversion"""
+    print("=" * 40)
+    print("    DEVISES DISPONIBLES")
+    print("=" * 40)
+    for i, devise in enumerate(TAUX_CHANGE.keys(), 1):
+        print(f"{i}. {devise}")
+    print("=" * 40)
+
+definir obtenir_devise_entree():
+    """Obtient la devise d'entrée de l'utilisateur"""
+    tant_que vrai:
+        try:
+            afficher_devises_disponibles()
+            option = entier(entree("Sélectionnez la devise d'entrée (1-8): "))
+            si 1 <= option <= 8:
+                devises = liste(TAUX_CHANGE.keys())
+                retourner devises[option - 1]
+            sinon:
+                afficher("❌ Option invalide. Veuillez sélectionner 1-8.")
+        except ValueError:
+            afficher("❌ Erreur: Veuillez entrer un nombre valide")
+
+definir obtenir_devise_sortie(devise_entree):
+    """Obtient la devise de sortie de l'utilisateur"""
+    tant_que vrai:
+        try:
+            afficher_devises_disponibles()
+            afficher(f"Devise d'entrée sélectionnée: {devise_entree}")
+            option = entier(entree("Sélectionnez la devise de sortie (1-8): "))
+            si 1 <= option <= 8:
+                devises = liste(TAUX_CHANGE.keys())
+                devise_sortie = devises[option - 1]
+                si devise_sortie == devise_entree:
+                    afficher("❌ La devise de sortie doit être différente de celle d'entrée")
+                    continuer
+                retourner devise_sortie
+            sinon:
+                afficher("❌ Option invalide. Veuillez sélectionner 1-8.")
+        except ValueError:
+            afficher("❌ Erreur: Veuillez entrer un nombre valide")
+
+definir obtenir_montant():
+    """Obtient le montant à convertir de l'utilisateur"""
+    tant_que vrai:
+        try:
+            montant = flottant(entree("Entrez le montant à convertir: "))
+            si montant > 0:
+                retourner montant
+            sinon:
+                afficher("❌ Le montant doit être supérieur à 0")
+        except ValueError:
+            afficher("❌ Erreur: Veuillez entrer un nombre valide")
+
+definir convertir_devise(montant, devise_entree, devise_sortie):
+    """Convertit le montant d'une devise à une autre"""
+    # Convertir en EUR d'abord (devise de base)
+    montant_eur = montant / TAUX_CHANGE[devise_entree]
+    
+    # Convertir d'EUR à la devise de sortie
+    montant_final = montant_eur * TAUX_CHANGE[devise_sortie]
+    
+    retourner montant_final
+
+definir afficher_resultat(montant, devise_entree, devise_sortie, resultat):
+    """Affiche le résultat de la conversion"""
+    print("\n" + "=" * 50)
+    print("    RÉSULTAT DE LA CONVERSION")
+    print("=" * 50)
+    print(f"💰 {montant} {devise_entree} = {resultat:.2f} {devise_sortie}")
+    print(f"📊 Taux de change: 1 {devise_entree} = {TAUX_CHANGE[devise_sortie]/TAUX_CHANGE[devise_entree]:.4f} {devise_sortie}")
+    print("=" * 50)
+
+definir main():
+    """Fonction principale du convertisseur de devises"""
+    afficher("💱 Bienvenue au Convertisseur de Devises de Syntaxis!")
+    afficher("💡 Note: Les taux de change sont des exemples et sont mis à jour régulièrement")
+    
+    tant_que vrai:
+        try:
+            # Obtener devise d'entrée
+            devise_entree = obtenir_devise_entree()
+            
+            # Obtener devise de sortie
+            devise_sortie = obtenir_devise_sortie(devise_entree)
+            
+            # Obtener montant
+            montant = obtenir_montant()
+            
+            # Effectuer conversion
+            resultat = convertir_devise(montant, devise_entree, devise_sortie)
+            
+            # Afficher résultat
+            afficher_resultat(montant, devise_entree, devise_sortie, resultat)
+            
+            # Demander si continuer
+            continuer = entree("\nVoulez-vous faire une autre conversion? (o/n): ").lower().strip()
+            si continuer no dans ['o', 'oui', 'y', 'yes']:
+                afficher("👋 Au revoir!")
+                casser
+                
+        except KeyboardInterrupt:
+            afficher("\n\n👋 Au revoir!")
+            casser
+        except Exception as e:
+            afficher(f"❌ Erreur inattendue: {e}")
+
+si __name__ == "__main__":
+    main()

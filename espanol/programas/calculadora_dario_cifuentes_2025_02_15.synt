@@ -1,0 +1,103 @@
+# Calculadora - Darío Cifuentes
+# Fecha: 2025-02-15
+# Descripción: Calculadora básica con operaciones matemáticas
+
+definir mostrar_menu():
+    """Muestra el menú de operaciones disponibles"""
+    print("=" * 30)
+    print("    CALCULADORA BÁSICA")
+    print("=" * 30)
+    print("1. Suma")
+    print("2. Resta")
+    print("3. Multiplicación")
+    print("4. División")
+    print("5. Potencia")
+    print("6. Salir")
+    print("=" * 30)
+
+definir obtener_numeros():
+    """Obtiene dos números del usuario"""
+    try:
+        num1 = flotante(entrada("Ingresa el primer número: "))
+        num2 = flotante(entrada("Ingresa el segundo número: "))
+        retornar num1, num2
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa números válidos")
+        retornar nada, nada
+
+definir suma(a, b):
+    """Realiza la suma de dos números"""
+    resultado = a + b
+    imprimir(f"📊 {a} + {b} = {resultado}")
+    retornar resultado
+
+definir resta(a, b):
+    """Realiza la resta de dos números"""
+    resultado = a - b
+    imprimir(f"📊 {a} - {b} = {resultado}")
+    retornar resultado
+
+definir multiplicacion(a, b):
+    """Realiza la multiplicación de dos números"""
+    resultado = a * b
+    imprimir(f"📊 {a} × {b} = {resultado}")
+    retornar resultado
+
+definir division(a, b):
+    """Realiza la división de dos números"""
+    si b == 0:
+        imprimir("❌ Error: No se puede dividir por cero")
+        retornar nada
+    resultado = a / b
+    imprimir(f"📊 {a} ÷ {b} = {resultado}")
+    retornar resultado
+
+definir potencia(a, b):
+    """Calcula la potencia de un número"""
+    resultado = a ** b
+    imprimir(f"📊 {a} ^ {b} = {resultado}")
+    retornar resultado
+
+definir main():
+    """Función principal de la calculadora"""
+    imprimir("🧮 ¡Bienvenido a la Calculadora de Syntaxis!")
+    
+    mientras verdadero:
+        mostrar_menu()
+        
+        try:
+            opcion = entrada("Selecciona una operación (1-6): ").strip()
+            
+            si opcion == "6":
+                imprimir("👋 ¡Hasta luego!")
+                romper
+                
+            si opcion en ["1", "2", "3", "4", "5"]:
+                num1, num2 = obtener_numeros()
+                
+                si num1 es nada o num2 es nada:
+                    continuar
+                
+                si opcion == "1":
+                    suma(num1, num2)
+                sino_si opcion == "2":
+                    resta(num1, num2)
+                sino_si opcion == "3":
+                    multiplicacion(num1, num2)
+                sino_si opcion == "4":
+                    division(num1, num2)
+                sino_si opcion == "5":
+                    potencia(num1, num2)
+            sino:
+                imprimir("❌ Opción inválida. Por favor selecciona 1-6.")
+                
+        except KeyboardInterrupt:
+            imprimir("\n\n👋 ¡Hasta luego!")
+            romper
+        except Exception as e:
+            imprimir(f"❌ Error inesperado: {e}")
+        
+        entrada("\nPresiona Enter para continuar...")
+
+si __name__ == "__main__":
+    main()

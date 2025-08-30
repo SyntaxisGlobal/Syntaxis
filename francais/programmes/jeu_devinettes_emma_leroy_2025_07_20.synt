@@ -1,0 +1,117 @@
+# Jeu de Devinettes - Emma Leroy
+# Date: 2025-07-20
+# Description: Jeu simple de devinettes de nombres
+
+importer random
+
+definir generer_nombre_secret():
+    """Génère un nombre secret aléatoire entre 1 et 100"""
+    retourner random.randint(1, 100)
+
+definir afficher_bienvenue():
+    """Affiche la bienvenue au jeu"""
+    print("🎮" + "=" * 50)
+    print("    JEU DE DEVINETTES")
+    print("=" * 50)
+    print("🎯 Devinez le nombre secret entre 1 et 100")
+    print("💡 Je vous donnerai des indices pour vous aider")
+    print("🏆 Essayez de le deviner en le moins d'essais possible!")
+    print("=" * 50)
+
+definir obtenir_essai():
+    """Obtient l'essai de l'utilisateur"""
+    tant_que vrai:
+        try:
+            essai = entier(entree("🎲 Entrez votre nombre (1-100): "))
+            si 1 <= essai <= 100:
+                retourner essai
+            sinon:
+                afficher("❌ Le nombre doit être entre 1 et 100")
+        except ValueError:
+            afficher("❌ Erreur: Veuillez entrer un nombre valide")
+
+definir donner_indice(essai, nombre_secret):
+    """Donne un indice à l'utilisateur sur son essai"""
+    difference = abs(essai - nombre_secret)
+    
+    si essai < nombre_secret:
+        si difference <= 5:
+            afficher("🔥 Très proche! Le nombre est plus grand")
+        sinon_si difference <= 15:
+            afficher("📈 Le nombre est plus grand")
+        sinon:
+            afficher("⬆️  Le nombre est beaucoup plus grand")
+    sinon:
+        si difference <= 5:
+            afficher("🔥 Très proche! Le nombre est plus petit")
+        sinon_si difference <= 15:
+            afficher("📉 Le nombre est plus petit")
+        sinon:
+            afficher("⬇️  Le nombre est beaucoup plus petit")
+
+definir afficher_statistiques(essais, temps_debut):
+    """Affiche les statistiques du jeu"""
+    print("\n" + "🏆" + "=" * 40)
+    print("    FÉLICITATIONS! VOUS AVEZ GAGNÉ!")
+    print("=" * 40)
+    print(f"🎯 Nombre d'essais: {essais}")
+    
+    # Calculer la note basée sur les essais
+    si essais <= 5:
+        note = "🌟 EXCELLENT! Vous êtes un maître des devinettes"
+    sinon_si essais <= 10:
+        note = "⭐ TRÈS BIEN! Vous avez un bon instinct"
+    sinon_si essais <= 15:
+        note = "👍 BIEN! Avec de la pratique vous vous améliorerez"
+    sinon:
+        note = "💪 Bon effort! La prochaine fois sera meilleure"
+    
+    print(f"📊 Note: {note}")
+    print("=" * 40)
+
+definir jouer_partie():
+    """Joue une partie complète"""
+    nombre_secret = generer_nombre_secret()
+    essais = 0
+    max_essais = 20
+    
+    afficher_bienvenue()
+    
+    tant_que essais < max_essais:
+        essais += 1
+        afficher(f"\n🎯 Essai #{essais}")
+        
+        essai_utilisateur = obtenir_essai()
+        
+        si essai_utilisateur == nombre_secret:
+            afficher_statistiques(essais, 0)
+            retourner vrai
+        sinon:
+            donner_indice(essai_utilisateur, nombre_secret)
+            
+            essais_restants = max_essais - essais
+            si essais_restants > 0:
+                afficher(f"⏰ Essais restants: {essais_restants}")
+            sinon:
+                afficher("⏰ Dernier essai!")
+    
+    # Si les essais sont épuisés
+    afficher(f"\n💀 GAME OVER! Les essais sont épuisés")
+    afficher(f"🎯 Le nombre secret était: {nombre_secret}")
+    retourner faux
+
+definir main():
+    """Fonction principale du jeu"""
+    afficher("🎮 Bienvenue au Jeu de Devinettes de Syntaxis!")
+    
+    tant_que vrai:
+        resultat = jouer_partie()
+        
+        # Demander s'il veut jouer une autre fois
+        jouer_autre_fois = entree("\n🎮 Voulez-vous jouer une autre fois? (o/n): ").lower().strip()
+        si jouer_autre_fois no dans ['o', 'oui', 'y', 'yes']:
+            afficher("👋 Merci d'avoir joué! Au revoir!")
+            casser
+
+si __name__ == "__main__":
+    main()

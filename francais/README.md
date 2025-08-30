@@ -1,131 +1,142 @@
-# Syntaxis - Français
+# Syntaxis - Français 🇫🇷
 
-Plateforme de programmation multilingue pour écrire, traduire et exécuter du code Python en utilisant la syntaxe française.
+**Syntaxis** est un système innovant qui permet d'écrire du code Python en utilisant une syntaxe française, rendant la programmation plus accessible aux francophones.
 
-## Description
+## Caractéristiques Principales
 
-Syntaxis est un outil éducatif conçu pour aider les programmeurs francophones à apprendre Python en utilisant leur langue maternelle comme pont vers l'anglais. Il permet d'écrire du code Python en utilisant des mots-clés français qui sont automatiquement traduits en Python standard.
-
-## Caractéristiques
-
-- **Éditeur de Code Multilingue**: Écris du code Python en syntaxe française
-- **Traduction en Temps Réel**: Conversion automatique vers Python standard
-- **Exécution de Code**: Exécute le code traduit dans un environnement sécurisé
-- **Interface Moderne**: Interface web responsive et facile à utiliser
-- **Éducatif**: Parfait pour apprendre Python dans ta langue maternelle
-
-## Installation
-
-### 1. Cloner le repository
-```bash
-git clone https://github.com/SyntaxisGlobal/Syntaxis.git
-cd Syntaxis/francais
-```
-
-### 2. Installer les dépendances
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Exécuter
-```bash
-python executeur_syntaxis.py
-```
-
-## Utilisation
-
-### Exécuter des Programmes
-```bash
-python executeur_syntaxis.py
-```
-
-### Traduire des Fichiers
-```bash
-python traducteur.py programme.synt programme.py
-```
-
-### Traduction Interactive
-```bash
-python traducteur.py programme.synt
-```
-
-## Syntaxe Supportée
-
-### Contrôle de Flux
-- `si` → `if`
-- `sinon` → `else`
-- `sinon_si` → `elif`
-- `pour` → `for`
-- `tant_que` → `while`
-- `dans` → `in`
-- `rompre` → `break`
-- `continuer` → `continue`
-- `passer` → `pass`
-
-### Fonctions
-- `definir` → `def`
-- `retourner` → `return`
-- `afficher` → `print`
-- `entree` → `input`
-
-### Types de Données
-- `vrai` → `True`
-- `faux` → `False`
-- `rien` → `None`
-
-### Fonctions Intégrées
-- `longueur` → `len`
-- `type` → `type`
-- `entier` → `int`
-- `flottant` → `float`
-- `chaine` → `str`
-- `liste` → `list`
-- `dictionnaire` → `dict`
-- `ensemble` → `set`
-
-### Opérateurs Logiques
-- `et` → `and`
-- `ou` → `or`
-- `non` → `not`
-
-## Programmes d'Exemple
-
-1. **01_bonjour_monde_marie_dupont_2025_02_08.synt** - Programme Bonjour Monde
-2. **02_calculatrice_pierre_martin_2025_03_12.synt** - Calculatrice
-3. **03_liste_taches_sophie_bernard_2025_04_18.synt** - Gestionnaire de tâches
-4. **04_convertisseur_devises_lucas_dubois_2025_06_15.synt** - Convertisseur de devises
-5. **05_jeu_devinettes_emma_leroy_2025_07_20.synt** - Jeu de devinettes
+- **Syntaxe en Français** : Écrivez du code en utilisant des mots-clés français
+- **Traduction Automatique** : Convertit automatiquement en Python standard
+- **Exécution Directe** : Exécute les programmes .synt sans compilation manuelle
+- **Support Complet** : Gère les structures complexes, décorateurs, métaclasses et plus
+- **Validation de Syntaxe** : Détecte les erreurs avant l'exécution
 
 ## Structure du Projet
 
 ```
 francais/
-├── programmes/            # Programmes en syntaxe française
-├── traducteur.py          # Traducteur français vers Python
-├── executeur_syntaxis.py  # Exécuteur de programmes
-└── README.md              # Cette documentation
+├── README.md                 # Ce fichier
+├── traducteur.py            # Traducteur principal de Syntaxis vers Python
+├── executeur_syntaxis.py    # Exécuteur interactif de programmes
+└── programmes/              # Répertoire des programmes d'exemple
+    ├── bonjour_monde_marie_dupont_2025_02_08.synt
+    ├── calculatrice_pierre_martin_2025_03_12.synt
+    ├── liste_taches_sophie_bernard_2025_04_18.synt
+    ├── convertisseur_devises_lucas_dubois_2025_06_15.synt
+    └── jeu_devinettes_emma_leroy_2025_07_20.synt
 ```
 
-## Contribuer
+## Installation et Utilisation
 
-1. Fais un fork du repository
-2. Crée une branche pour ta fonctionnalité (`git checkout -b feature/nouvelle-fonctionnalite`)
-3. Fais un commit de tes changements (`git commit -m 'Ajouter nouvelle fonctionnalité'`)
-4. Fais un push vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
-5. Ouvre une Pull Request
+### Prérequis
+- Python 3.7 ou supérieur
+- Aucune dépendance externe requise
 
-## Licence
+### Exécuter un Programme
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+1. **En utilisant l'exécuteur interactif :**
+   ```bash
+   python executeur_syntaxis.py
+   ```
 
-## Remerciements
+2. **Exécuter un programme spécifique :**
+   ```bash
+   python executeur_syntaxis.py
+   # Sélectionnez l'option 1 et choisissez le programme
+   ```
 
-- **Programmes Français**: Marie Dupont, Pierre Martin, Sophie Bernard, Lucas Dubois, Emma Leroy
+3. **Traduire manuellement :**
+   ```python
+   from traducteur import traducir_archivo
+   traducir_archivo("programme.synt", "programme.py")
+   ```
 
-## Site Web
+## Syntaxe de Syntaxis
 
-**Syntaxis: Apprends et programme Python dans ta langue !**
+### Mots-Clés Principaux
+
+| Syntaxis (Français) | Python (Anglais) | Description |
+|---------------------|------------------|-------------|
+| `definir` | `def` | Définir une fonction |
+| `classe` | `class` | Définir une classe |
+| `si` | `if` | Condition if |
+| `sinon` | `else` | Condition else |
+| `pour` | `for` | Boucle for |
+| `tant_que` | `while` | Boucle while |
+| `imprimer` | `print` | Imprimer du texte |
+| `entree` | `input` | Obtenir l'entrée de l'utilisateur |
+| `retourner` | `return` | Retourner une valeur |
+| `importer` | `import` | Importer un module |
+
+### Exemple de Code
+
+```python
+# Syntaxis (Français)
+definir saluer(nom):
+    si nom:
+        imprimer(f"Bonjour {nom}!")
+    sinon:
+        imprimer("Bonjour inconnu!")
+
+# Se traduit automatiquement en :
+# def saluer(nom):
+#     if nom:
+#         print(f"Bonjour {nom}!")
+#     else:
+#         print("Bonjour inconnu!")
+```
+
+## Programmes d'Exemple
+
+### 1. Bonjour Monde
+- **Fichier** : `bonjour_monde_marie_dupont_2025_02_08.synt`
+- **Auteur** : Marie Dupont
+- **Description** : Programme de base d'introduction
+
+### 2. Calculatrice
+- **Fichier** : `calculatrice_pierre_martin_2025_03_12.synt`
+- **Auteur** : Pierre Martin
+- **Description** : Calculatrice de base avec opérations arithmétiques
+
+### 3. Liste de Tâches
+- **Fichier** : `liste_taches_sophie_bernard_2025_04_18.synt`
+- **Auteur** : Sophie Bernard
+- **Description** : Gestionnaire de liste de tâches
+
+### 4. Convertisseur de Devises
+- **Fichier** : `convertisseur_devises_lucas_dubois_2025_06_15.synt`
+- **Auteur** : Lucas Dubois
+- **Description** : Convertit entre différentes devises
+
+### 5. Jeu de Devinettes
+- **Fichier** : `jeu_devinettes_emma_leroy_2025_07_20.synt`
+- **Auteur** : Emma Leroy
+- **Description** : Jeu interactif de devinettes
+
+## Caractéristiques Avancées
+
+### Contexte de Traduction
+- Gestion des portées imbriquées
+- Suivi des variables, fonctions et classes
+- Validation des types et contextes
+
+### Modèles Regex Avancés
+- Détection de modèles complexes
+- Traduction d'expressions régulières
+- Gestion des littéraux et opérateurs
+
+### Gestion des Erreurs
+- Détection précoce des erreurs de syntaxe
+- Messages d'erreur en français
+- Suggestions de correction
+
+## Comment Ça Marche
+
+1. **Analyse Lexicale** : Le code .synt est converti en tokens
+2. **Analyse Syntaxique** : La structure du code est validée
+3. **Traduction** : Les règles de traduction sont appliquées
+4. **Génération** : Du code Python valide est produit
+5. **Exécution** : Le code Python résultant est exécuté
 
 ---
 
-**Note**: Ce traducteur est un outil éducatif conçu pour aider les programmeurs francophones à apprendre Python en utilisant leur langue maternelle comme pont vers l'anglais.
+**Profitez de la programmation en français avec Syntaxis !**

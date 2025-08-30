@@ -1,120 +1,132 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Syntaxis Spanish Program Executor
-Ejecuta programas Syntaxis escritos en español
+Ejecutor de Syntaxis - Español
+Ejecuta programas Python escritos en sintaxis española
 """
 
 import os
 import sys
 import subprocess
 from pathlib import Path
-from translator import translate_file
 
-def list_programs():
-    """Lista todos los programas .synt disponibles"""
+def mostrar_menu():
+    """Muestra el menú principal del ejecutor"""
+    print("=" * 50)
+    print("    EJECUTOR DE SYNTAXIS - ESPAÑOL")
+    print("=" * 50)
+    print("1. Ejecutar programa específico")
+    print("2. Listar programas disponibles")
+    print("3. Traducir programa a Python")
+    print("4. Salir")
+    print("=" * 50)
+
+def listar_programas():
+    """Lista todos los programas disponibles"""
     programas_dir = Path("programas")
     if not programas_dir.exists():
-        print("Error: No se encontró el directorio 'programas'")
-        return []
-    
-    programs = list(programas_dir.glob("*.synt"))
-    if not programs:
-        print("No se encontraron programas .synt")
-        return []
-    
-    print("Programas disponibles:")
-    for i, program in enumerate(programs, 1):
-        print(f"  {i}. {program.name}")
-    
-    return programs
-
-def select_program(programs):
-    """Permite al usuario seleccionar un programa"""
-    while True:
-        try:
-            choice = input("\nSelecciona un programa (número) o 'q' para salir: ").strip()
-            if choice.lower() == 'q':
-                return None
-            
-            choice_num = int(choice)
-            if 1 <= choice_num <= len(programs):
-                return programs[choice_num - 1]
-            else:
-                print(f"Por favor selecciona un número entre 1 y {len(programs)}")
-        except ValueError:
-            print("Por favor ingresa un número válido")
-
-def run_program(program_path):
-    """Ejecuta un programa Syntaxis"""
-    print(f"\nEjecutando: {program_path.name}")
-    print("-" * 50)
-    
-    # Traducir a Python
-    temp_py = program_path.with_suffix('.py')
-    translate_file(program_path, temp_py)
-    
-    try:
-        # Ejecutar el código Python traducido
-        result = subprocess.run([sys.executable, str(temp_py)], 
-                              capture_output=True, text=True, encoding='utf-8')
-        
-        if result.stdout:
-            print("Salida:")
-            print(result.stdout)
-        
-        if result.stderr:
-            print("Errores:")
-            print(result.stderr)
-        
-        if result.returncode == 0:
-            print("\n✅ Programa ejecutado exitosamente")
-        else:
-            print(f"\n❌ Programa terminó con código de salida: {result.returncode}")
-            
-    except Exception as e:
-        print(f"Error ejecutando el programa: {e}")
-    
-    finally:
-        # Limpiar archivo temporal
-        if temp_py.exists():
-            temp_py.unlink()
-
-def main():
-    """Función principal"""
-    print("🚀 Ejecutor de Programas Syntaxis - Español")
-    print("=" * 50)
-    
-    # Cambiar al directorio de programas
-    os.chdir(Path(__file__).parent)
-    
-    programs = list_programs()
-    if not programs:
+        print("❌ No se encontró la carpeta de programas")
         return
     
-    while True:
-        selected = select_program(programs)
-        if selected is None:
-            break
-        
-        run_program(selected)
-        
-        # Preguntar si quiere ejecutar otro
-        again = input("\n¿Ejecutar otro programa? (s/n): ").strip().lower()
-        if again not in ['s', 'si', 'y', 'yes']:
-            break
+    programas = list(programas_dir.glob("*.synt"))
+    if not programas:
+        print("❌ No hay programas disponibles")
+        return
     
-    print("\n👋 ¡Hasta luego!")
+    print(f"\n📁 Programas disponibles ({len(programas)}):")
+    for i, programa in enumerate(programas, 1):
+        print(f"   {i}. {programa.name}")
+    
+    return programas
+
+def ejecutar_programa(programa_path):
+    """Ejecuta un programa .synt"""
+    try:
+        # Primero traducir a Python
+        from translator import traducir_archivo
+        
+        nombre_base = programa_path.stem
+        archivo_python = f"{nombre_base}.py"
+        
+        print(f"🔄 Traduciendo {programa_path.name}...")
+        traducir_archivo(programa_path, archivo_python)
+        
+        # Ejecutar el código Python traducido
+        print(f"🚀 Ejecutando {archivo_python}...")
+        print("-" * 30)
+        
+        resultado = subprocess.run([sys.executable, archivo_python], 
+                                 capture_output=True, text=True, encoding='utf-8')
+        
+        if resultado.stdout:
+            print("📤 Salida:")
+            print(resultado.stdout)
+        
+        if resultado.stderr:
+            print("⚠️  Errores:")
+            print(resultado.stderr)
+        
+        if resultado.returncode == 0:
+            print("✅ Programa ejecutado exitosamente")
+        else:
+            print(f"❌ Programa terminó con código de salida: {resultado.returncode}")
+            
+    except Exception as e:
+        print(f"❌ Error al ejecutar el programa: {e}")
+
+def main():
+    """Función principal del ejecutor"""
+    while True:
+        mostrar_menu()
+        
+        try:
+            opcion = input("\nSelecciona una opción (1-4): ").strip()
+            
+            if opcion == "1":
+                programas = listar_programas()
+                if programas:
+                    try:
+                        num = int(input("Ingresa el número del programa a ejecutar: ")) - 1
+                        if 0 <= num < len(programas):
+                            ejecutar_programa(programas[num])
+                        else:
+                            print("❌ Número de programa inválido")
+                    except ValueError:
+                        print("❌ Por favor ingresa un número válido")
+                        
+            elif opcion == "2":
+                listar_programas()
+                
+            elif opcion == "3":
+                programas = listar_programas()
+                if programas:
+                    try:
+                        num = int(input("Ingresa el número del programa a traducir: ")) - 1
+                        if 0 <= num < len(programas):
+                            from translator import traducir_archivo
+                            programa = programas[num]
+                            archivo_python = f"{programa.stem}.py"
+                            traducir_archivo(programa, archivo_python)
+                            print(f"✅ Programa traducido a {archivo_python}")
+                        else:
+                            print("❌ Número de programa inválido")
+                    except ValueError:
+                        print("❌ Por favor ingresa un número válido")
+                        
+            elif opcion == "4":
+                print("👋 ¡Hasta luego!")
+                break
+                
+            else:
+                print("❌ Opción inválida. Por favor selecciona 1-4.")
+                
+        except KeyboardInterrupt:
+            print("\n\n👋 ¡Hasta luego!")
+            break
+        except Exception as e:
+            print(f"❌ Error inesperado: {e}")
+        
+        input("\nPresiona Enter para continuar...")
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,192 @@
+# Gestor de Contactos - Octavio Esquivel
+# Fecha: 2025-05-20
+# Descripción: Gestor de contactos con funcionalidades básicas
+
+# Lista global para almacenar los contactos
+contactos = []
+
+definir mostrar_menu():
+    """Muestra el menú principal del gestor"""
+    print("=" * 40)
+    print("    GESTOR DE CONTACTOS")
+    print("=" * 40)
+    print("1. Agregar contacto")
+    print("2. Ver todos los contactos")
+    print("3. Buscar contacto")
+    print("4. Editar contacto")
+    print("5. Eliminar contacto")
+    print("6. Salir")
+    print("=" * 40)
+
+definir agregar_contacto():
+    """Agrega un nuevo contacto"""
+    print("\n📝 AGREGAR NUEVO CONTACTO")
+    print("-" * 30)
+    
+    nombre = entrada("Nombre: ").strip()
+    si no nombre:
+        imprimir("❌ El nombre no puede estar vacío")
+        retornar
+    
+    telefono = entrada("Teléfono: ").strip()
+    email = entrada("Email (opcional): ").strip()
+    direccion = entrada("Dirección (opcional): ").strip()
+    
+    # Crear el nuevo contacto
+    nuevo_contacto = {
+        "id": longitud(contactos) + 1,
+        "nombre": nombre,
+        "telefono": telefono,
+        "email": email,
+        "direccion": direccion
+    }
+    
+    contactos.append(nuevo_contacto)
+    imprimir(f"✅ Contacto '{nombre}' agregado exitosamente!")
+
+definir ver_contactos():
+    """Muestra todos los contactos"""
+    si no contactos:
+        imprimir("📝 No hay contactos registrados")
+        retornar
+    
+    print("\n" + "👥" + "=" * 60)
+    print("    LISTA DE CONTACTOS")
+    print("=" * 60)
+    
+    para contacto en contactos:
+        print(f"🆔 ID: {contacto['id']}")
+        print(f"👤 Nombre: {contacto['nombre']}")
+        print(f"📞 Teléfono: {contacto['telefono']}")
+        si contacto['email']:
+            print(f"📧 Email: {contacto['email']}")
+        si contacto['direccion']:
+            print(f"📍 Dirección: {contacto['direccion']}")
+        print("-" * 40)
+
+definir buscar_contacto():
+    """Busca un contacto por nombre o teléfono"""
+    si no contactos:
+        imprimir("📝 No hay contactos para buscar")
+        retornar
+    
+    termino = entrada("🔍 Ingresa el nombre o teléfono a buscar: ").strip().lower()
+    si no termino:
+        imprimir("❌ Término de búsqueda vacío")
+        retornar
+    
+    encontrados = []
+    para contacto en contactos:
+        si (termino en contacto['nombre'].lower() o 
+            termino en contacto['telefono']):
+            encontrados.append(contacto)
+    
+    si encontrados:
+        print(f"\n🔍 Se encontraron {longitud(encontrados)} contacto(s):")
+        print("=" * 50)
+        para contacto en encontrados:
+            print(f"👤 {contacto['nombre']} - 📞 {contacto['telefono']}")
+    sino:
+        imprimir("❌ No se encontraron contactos")
+
+definir editar_contacto():
+    """Edita un contacto existente"""
+    si no contactos:
+        imprimir("📝 No hay contactos para editar")
+        retornar
+    
+    ver_contactos()
+    try:
+        id_contacto = entero(entrada("🆔 Ingresa el ID del contacto a editar: "))
+        
+        para contacto en contactos:
+            si contacto['id'] == id_contacto:
+                print(f"\n✏️  Editando contacto: {contacto['nombre']}")
+                print("-" * 30)
+                
+                nombre = entrada(f"Nombre ({contacto['nombre']}): ").strip()
+                si nombre:
+                    contacto['nombre'] = nombre
+                
+                telefono = entrada(f"Teléfono ({contacto['telefono']}): ").strip()
+                si telefono:
+                    contacto['telefono'] = telefono
+                
+                email = entrada(f"Email ({contacto['email']}): ").strip()
+                si email:
+                    contacto['email'] = email
+                
+                direccion = entrada(f"Dirección ({contacto['direccion']}): ").strip()
+                si direccion:
+                    contacto['direccion'] = direccion
+                
+                imprimir("✅ Contacto actualizado exitosamente!")
+                retornar
+        
+        imprimir("❌ ID de contacto no encontrado")
+        
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa un ID válido")
+
+definir eliminar_contacto():
+    """Elimina un contacto"""
+    si no contactos:
+        imprimir("📝 No hay contactos para eliminar")
+        retornar
+    
+    ver_contactos()
+    try:
+        id_contacto = entero(entrada("🆔 Ingresa el ID del contacto a eliminar: "))
+        
+        para i, contacto en enumerate(contactos):
+            si contacto['id'] == id_contacto:
+                nombre = contacto['nombre']
+                confirmacion = entrada(f"⚠️  ¿Estás seguro de eliminar '{nombre}'? (s/n): ").lower().strip()
+                si confirmacion en ['s', 'si', 'sí', 'y', 'yes']:
+                    del contactos[i]
+                    imprimir(f"🗑️  Contacto '{nombre}' eliminado exitosamente!")
+                sino:
+                    imprimir("❌ Eliminación cancelada")
+                retornar
+        
+        imprimir("❌ ID de contacto no encontrado")
+        
+    except ValueError:
+        imprimir("❌ Error: Por favor ingresa un ID válido")
+
+definir main():
+    """Función principal del gestor de contactos"""
+    imprimir("📱 ¡Bienvenido al Gestor de Contactos de Syntaxis!")
+    
+    mientras verdadero:
+        mostrar_menu()
+        
+        try:
+            opcion = entrada("\nSelecciona una opción (1-6): ").strip()
+            
+            si opcion == "1":
+                agregar_contacto()
+            sino_si opcion == "2":
+                ver_contactos()
+            sino_si opcion == "3":
+                buscar_contacto()
+            sino_si opcion == "4":
+                editar_contacto()
+            sino_si opcion == "5":
+                eliminar_contacto()
+            sino_si opcion == "6":
+                imprimir("👋 ¡Hasta luego!")
+                romper
+            sino:
+                imprimir("❌ Opción inválida. Por favor selecciona 1-6.")
+                
+        except KeyboardInterrupt:
+            imprimir("\n\n👋 ¡Hasta luego!")
+            romper
+        except Exception as e:
+            imprimir(f"❌ Error inesperado: {e}")
+        
+        entrada("\nPresiona Enter para continuar...")
+
+si __name__ == "__main__":
+    main()
