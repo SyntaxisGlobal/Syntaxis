@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import datetime
+import random
+
+# Données globales
+utilisateurs_connus = {}
+statistiques_visites = {
+    "total_visites": 0,
+    "visites_jour": 0,
+    "derniere_visite": ""
+}
+
+definir calculer_age(annee_naissance):
+    annee_actuelle = datetime.datetime.now().year
+    age = annee_actuelle - annee_naissance
+    retourner age
+
+definir determiner_generation(annee_naissance):
+    si annee_naissance >= 1997:
+        retourner "Génération Z"
+    sinon_si annee_naissance >= 1981:
+        retourner "Millennials"
+    sinon_si annee_naissance >= 1965:
+        retourner "Génération X"
+    sinon_si annee_naissance >= 1946:
+        retourner "Baby Boomers"
+    sinon:
+        retourner "Génération Silencieuse"
+
+definir calculer_nombre_magique(nom, age):
+    # Algorithme simple pour générer un nombre "magique"
+    somme_lettres = 0
+    pour lettre dans nom.lower():
+        si lettre dans "abcdefghijklmnopqrstuvwxyz":
+            somme_lettres += ord(lettre) - ord('a') + 1
+    
+    nombre_magique = (somme_lettres * age) % 100
+    retourner nombre_magique
+
+definir generer_message_personnalise(nom, age, generation):
+    messages = [
+        f"Bonjour {nom}! À {age} ans, vous faites partie de la {generation}.",
+        f"Salut {nom}! C'est incroyable d'avoir {age} ans et d'être {generation}!",
+        f"Bienvenue {nom}! En tant que {generation} de {age} ans, vous avez tant d'expérience!",
+        f"Hey {nom}! {age} ans, c'est un bel âge pour un(e) {generation}!"
+    ]
+    retourner random.choice(messages)
+
+definir afficher_horoscope_du_jour(nombre_magique):
+    horoscopes = {
+        0: "Journée exceptionnelle! Tout ira bien.",
+        1: "Prudence recommandée, mais restez optimiste.",
+        2: "Excellente journée pour prendre des décisions importantes.",
+        3: "Concentrez-vous sur vos objectifs personnels.",
+        4: "Journée propice aux rencontres intéressantes.",
+        5: "Évitez les conflits, privilégiez la diplomatie.",
+        6: "Parfait pour commencer de nouveaux projets.",
+        7: "Journée de réflexion et de méditation.",
+        8: "Succès financier possible aujourd'hui.",
+        9: "Énergie positive, profitez-en!"
+    }
+    
+    # Utiliser le nombre magique pour déterminer l'horoscope
+    index = nombre_magique % 10
+    retourner horoscopes.get(index, "Journée normale, restez vigilant(e).")
+
+definir calculer_statistiques_utilisateur(nom):
+    si nom dans utilisateurs_connus:
+        utilisateur = utilisateurs_connus[nom]
+        utilisateur["visites"] += 1
+        utilisateur["derniere_visite"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    sinon:
+        utilisateurs_connus[nom] = {
+            "visites": 1,
+            "premiere_visite": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "derniere_visite": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+    
+    statistiques_visites["total_visites"] += 1
+    statistiques_visites["visites_jour"] += 1
+    statistiques_visites["derniere_visite"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+definir afficher_menu_principal():
+    afficher("\n=== MENU PRINCIPAL ===")
+    afficher("1. Nouvelle salutation")
+    afficher("2. Voir mes statistiques")
+    afficher("3. Voir les statistiques globales")
+    afficher("4. Calculer mon nombre magique")
+    afficher("5. Voir l'horoscope du jour")
+    afficher("6. Quitter")
+
+definir nouvelle_salutation():
+    afficher("\n=== NOUVELLE SALUTATION ===")
+    nom = entree("Entrez votre prénom: ")
+    
+    si non nom.strip():
+        afficher("Erreur: Le nom ne peut pas être vide")
+        retourner
+    
+    try:
+        annee_naissance = entier(entree("Entrez votre année de naissance: "))
+        age = calculer_age(annee_naissance)
+        
+        si age < 0 ou age > 150:
+            afficher("Erreur: Âge invalide")
+            retourner
+        
+        generation = determiner_generation(annee_naissance)
+        nombre_magique = calculer_nombre_magique(nom, age)
+        message = generer_message_personnalise(nom, age, generation)
+        
+        afficher(f"\n{message}")
+        afficher(f"Votre nombre magique: {nombre_magique}")
+        
+        # Calculer et afficher des statistiques intéressantes
+        jours_vivus = age * 365
+        heures_vivues = jours_vivus * 24
+        minutes_vivues = heures_vivues * 60
+        
+        afficher(f"\nStatistiques de vie:")
+        afficher(f"  - Jours vécus: {jours_vivus:,}")
+        afficher(f"  - Heures vécues: {heures_vivues:,}")
+        afficher(f"  - Minutes vécues: {minutes_vivues:,}")
+        
+        # Prédiction amusante
+        annees_restantes = 85 - age  # Espérance de vie moyenne
+        si annees_restantes > 0:
+            afficher(f"  - Années restantes (estimation): {annees_restantes}")
+        
+        calculer_statistiques_utilisateur(nom)
+        
+    except ValueError:
+        afficher("Erreur: Veuillez entrer un nombre valide pour l'année")
+
+definir afficher_statistiques_personnelles():
+    nom = entree("Entrez votre nom pour voir vos statistiques: ")
+    
+    si nom dans utilisateurs_connus:
+        utilisateur = utilisateurs_connus[nom]
+        afficher(f"\n=== STATISTIQUES DE {nom.upper()} ===")
+        afficher(f"Nombre de visites: {utilisateur['visites']}")
+        afficher(f"Première visite: {utilisateur['premiere_visite']}")
+        afficher(f"Dernière visite: {utilisateur['derniere_visite']}")
+    sinon:
+        afficher(f"Aucune donnée trouvée pour {nom}")
+
+definir afficher_statistiques_globales():
+    afficher("\n=== STATISTIQUES GLOBALES ===")
+    afficher(f"Total des visites: {statistiques_visites['total_visites']}")
+    afficher(f"Visites aujourd'hui: {statistiques_visites['visites_jour']}")
+    afficher(f"Dernière visite: {statistiques_visites['derniere_visite']}")
+    afficher(f"Utilisateurs uniques: {longueur(utilisateurs_connus)}")
+
+definir calculer_nombre_magique_utilisateur():
+    nom = entree("Entrez votre nom: ")
+    age = entier(entree("Entrez votre âge: "))
+    
+    nombre_magique = calculer_nombre_magique(nom, age)
+    afficher(f"\nVotre nombre magique: {nombre_magique}")
+    
+    # Explication du calcul
+    somme_lettres = 0
+    pour lettre dans nom.lower():
+        si lettre dans "abcdefghijklmnopqrstuvwxyz":
+            valeur = ord(lettre) - ord('a') + 1
+            somme_lettres += valeur
+    
+    afficher(f"Calcul: ({somme_lettres} × {age}) % 100 = {nombre_magique}")
+
+definir afficher_horoscope():
+    nombre = entier(entree("Entrez votre nombre magique: "))
+    horoscope = afficher_horoscope_du_jour(nombre)
+    afficher(f"\nHoroscope du jour: {horoscope}")
+
+definir menu_interactif():
+    afficher("=== PROGRAMME DE SALUTATION INTERACTIF ===")
+    afficher("Bienvenue dans notre système de salutation avancé!")
+    
+    tant_que vrai:
+        afficher_menu_principal()
+        choix = entree("Choisissez une option (1-6): ")
+        
+        si choix == "1":
+            nouvelle_salutation()
+        sinon_si choix == "2":
+            afficher_statistiques_personnelles()
+        sinon_si choix == "3":
+            afficher_statistiques_globales()
+        sinon_si choix == "4":
+            calculer_nombre_magique_utilisateur()
+        sinon_si choix == "5":
+            afficher_horoscope()
+        sinon_si choix == "6":
+            afficher("Merci d'avoir utilisé notre programme! Au revoir!")
+            rompre
+        sinon:
+            afficher("Option invalide. Veuillez choisir entre 1 et 6.")
+
+# Exécuter le programme
+si __name__ == "__main__":
+    menu_interactif()

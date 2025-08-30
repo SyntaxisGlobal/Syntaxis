@@ -1,0 +1,251 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import datetime
+
+# Base de données des livres
+livres = []
+# Base de données des emprunts
+emprunts = []
+# Base de données des membres
+membres = []
+
+definir ajouter_livre(titre, auteur, isbn, genre, annee_publication, exemplaires=1):
+    livre = {
+        "id": longueur(livres) + 1,
+        "titre": titre,
+        "auteur": auteur,
+        "isbn": isbn,
+        "genre": genre,
+        "annee_publication": annee_publication,
+        "exemplaires_disponibles": exemplaires,
+        "exemplaires_total": exemplaires,
+        "date_ajout": datetime.datetime.now().strftime("%Y-%m-%d")
+    }
+    livres.append(livre)
+    afficher(f"Livre ajouté: {titre} par {auteur}")
+
+definir ajouter_membre(nom, email, telephone):
+    membre = {
+        "id": longueur(membres) + 1,
+        "nom": nom,
+        "email": email,
+        "telephone": telephone,
+        "date_inscription": datetime.datetime.now().strftime("%Y-%m-%d"),
+        "actif": vrai
+    }
+    membres.append(membre)
+    afficher(f"Membre ajouté: {nom}")
+
+definir emprunter_livre(id_membre, id_livre):
+    # Vérifier si le membre existe
+    membre_trouve = faux
+    pour membre dans membres:
+        si membre["id"] == id_membre et membre["actif"]:
+            membre_trouve = vrai
+            rompre
+    
+    si non membre_trouve:
+        afficher("Membre non trouvé ou inactif")
+        retourner
+    
+    # Vérifier si le livre existe et est disponible
+    livre_trouve = faux
+    pour livre dans livres:
+        si livre["id"] == id_livre:
+            livre_trouve = vrai
+            si livre["exemplaires_disponibles"] > 0:
+                livre["exemplaires_disponibles"] -= 1
+                
+                # Créer l'emprunt
+                emprunt = {
+                    "id": longueur(emprunts) + 1,
+                    "id_membre": id_membre,
+                    "id_livre": id_livre,
+                    "date_emprunt": datetime.datetime.now().strftime("%Y-%m-%d"),
+                    "date_retour_prevue": "2025-06-25",  # 30 jours plus tard
+                    "retourne": faux
+                }
+                emprunts.append(emprunt)
+                afficher(f"Livre emprunté: {livre['titre']}")
+            sinon:
+                afficher("Aucun exemplaire disponible")
+            rompre
+    
+    si non livre_trouve:
+        afficher("Livre non trouvé")
+
+definir retourner_livre(id_emprunt):
+    pour emprunt dans emprunts:
+        si emprunt["id"] == id_emprunt et non emprunt["retourne"]:
+            emprunt["retourne"] = vrai
+            emprunt["date_retour_effective"] = datetime.datetime.now().strftime("%Y-%m-%d")
+            
+            # Remettre l'exemplaire disponible
+            pour livre dans livres:
+                si livre["id"] == emprunt["id_livre"]:
+                    livre["exemplaires_disponibles"] += 1
+                    afficher(f"Livre retourné: {livre['titre']}")
+                    rompre
+            retourner
+    
+    afficher("Emprunt non trouvé ou déjà retourné")
+
+definir afficher_livres():
+    si longueur(livres) == 0:
+        afficher("Aucun livre dans la bibliothèque")
+        retourner
+    
+    afficher("\n=== CATALOGUE DE LA BIBLIOTHÈQUE ===")
+    pour livre dans livres:
+        statut = "🟢" si livre["exemplaires_disponibles"] > 0 sinon "🔴"
+        afficher(f"{statut} [{livre['id']}] {livre['titre']} - {livre['auteur']}")
+        afficher(f"   Genre: {livre['genre']} | Année: {livre['annee_publication']}")
+        afficher(f"   Disponible: {livre['exemplaires_disponibles']}/{livre['exemplaires_total']}")
+
+definir afficher_membres():
+    si longueur(membres) == 0:
+        afficher("Aucun membre inscrit")
+        retourner
+    
+    afficher("\n=== MEMBRES DE LA BIBLIOTHÈQUE ===")
+    pour membre dans membres:
+        statut = "🟢" si membre["actif"] sinon "🔴"
+        afficher(f"{statut} [{membre['id']}] {membre['nom']} - {membre['email']}")
+
+definir afficher_emprunts():
+    si longueur(emprunts) == 0:
+        afficher("Aucun emprunt en cours")
+        retourner
+    
+    afficher("\n=== EMPRUNTS EN COURS ===")
+    pour emprunt dans emprunts:
+        si non emprunt["retourne"]:
+            # Trouver les informations du membre et du livre
+            nom_membre = "Inconnu"
+            titre_livre = "Inconnu"
+            
+            pour membre dans membres:
+                si membre["id"] == emprunt["id_membre"]:
+                    nom_membre = membre["nom"]
+                    rompre
+            
+            pour livre dans livres:
+                si livre["id"] == emprunt["id_livre"]:
+                    titre_livre = livre["titre"]
+                    rompre
+            
+            afficher(f"[{emprunt['id']}] {titre_livre} emprunté par {nom_membre}")
+            afficher(f"   Emprunté le: {emprunt['date_emprunt']} | Retour prévu: {emprunt['date_retour_prevue']}")
+
+definir rechercher_livre(terme):
+    resultats = []
+    pour livre dans livres:
+        si (terme.lower() dans livre['titre'].lower() ou 
+            terme.lower() dans livre['auteur'].lower() ou
+            terme.lower() dans livre['genre'].lower()):
+            resultats.append(livre)
+    retourner resultats
+
+definir statistiques():
+    total_livres = longueur(livres)
+    total_membres = longueur(membres)
+    emprunts_actifs = sum(1 pour emprunt dans emprunts si non emprunt["retourne"])
+    
+    afficher("\n=== STATISTIQUES DE LA BIBLIOTHÈQUE ===")
+    afficher(f"Total des livres: {total_livres}")
+    afficher(f"Total des membres: {total_membres}")
+    afficher(f"Emprunts actifs: {emprunts_actifs}")
+    
+    # Livres les plus populaires
+    popularite = {}
+    pour emprunt dans emprunts:
+        id_livre = emprunt["id_livre"]
+        popularite[id_livre] = popularite.get(id_livre, 0) + 1
+    
+    si popularite:
+        afficher("\nLivres les plus empruntés:")
+        livres_populaires = sorted(popularite.items(), key=lambda x: x[1], reverse=True)[:3]
+        pour id_livre, count dans livres_populaires:
+            pour livre dans livres:
+                si livre["id"] == id_livre:
+                    afficher(f"  {livre['titre']}: {count} emprunts")
+
+definir menu_bibliotheque():
+    tant_que vrai:
+        afficher("\n=== SYSTÈME DE GESTION DE BIBLIOTHÈQUE ===")
+        afficher("1. Ajouter un livre")
+        afficher("2. Ajouter un membre")
+        afficher("3. Emprunter un livre")
+        afficher("4. Retourner un livre")
+        afficher("5. Voir tous les livres")
+        afficher("6. Voir tous les membres")
+        afficher("7. Voir les emprunts en cours")
+        afficher("8. Rechercher un livre")
+        afficher("9. Voir les statistiques")
+        afficher("10. Quitter")
+        
+        option = entree("Choisissez une option (1-10): ")
+        
+        si option == "1":
+            titre = entree("Titre du livre: ")
+            auteur = entree("Auteur: ")
+            isbn = entree("ISBN: ")
+            genre = entree("Genre: ")
+            annee = entier(entree("Année de publication: "))
+            exemplaires = entier(entree("Nombre d'exemplaires: "))
+            ajouter_livre(titre, auteur, isbn, genre, annee, exemplaires)
+            
+        sinon_si option == "2":
+            nom = entree("Nom du membre: ")
+            email = entree("Email: ")
+            telephone = entree("Téléphone: ")
+            ajouter_membre(nom, email, telephone)
+            
+        sinon_si option == "3":
+            afficher_membres()
+            id_membre = entier(entree("ID du membre: "))
+            afficher_livres()
+            id_livre = entier(entree("ID du livre: "))
+            emprunter_livre(id_membre, id_livre)
+            
+        sinon_si option == "4":
+            afficher_emprunts()
+            id_emprunt = entier(entree("ID de l'emprunt: "))
+            retourner_livre(id_emprunt)
+            
+        sinon_si option == "5":
+            afficher_livres()
+        sinon_si option == "6":
+            afficher_membres()
+        sinon_si option == "7":
+            afficher_emprunts()
+        sinon_si option == "8":
+            terme = entree("Terme de recherche: ")
+            resultats = rechercher_livre(terme)
+            si resultats:
+                afficher(f"Résultats pour '{terme}':")
+                pour livre dans resultats:
+                    afficher(f"- {livre['titre']} par {livre['auteur']}")
+            sinon:
+                afficher(f"Aucun livre trouvé pour '{terme}'")
+        sinon_si option == "9":
+            statistiques()
+        sinon_si option == "10":
+            afficher("Au revoir!")
+            rompre
+        sinon:
+            afficher("Option invalide")
+
+# Ajouter quelques livres d'exemple
+ajouter_livre("Le Petit Prince", "Antoine de Saint-Exupéry", "978-2070408504", "Roman", 1943, 3)
+ajouter_livre("Les Misérables", "Victor Hugo", "978-2070413119", "Roman", 1862, 2)
+ajouter_livre("Madame Bovary", "Gustave Flaubert", "978-2070413118", "Roman", 1857, 1)
+
+# Ajouter quelques membres d'exemple
+ajouter_membre("Marie Dupont", "marie@email.com", "01-23-45-67-89")
+ajouter_membre("Jean Martin", "jean@email.com", "01-98-76-54-32")
+
+# Exécuter le programme
+si __name__ == "__main__":
+    menu_bibliotheque()
