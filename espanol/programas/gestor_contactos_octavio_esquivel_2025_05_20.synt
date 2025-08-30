@@ -1,6 +1,5 @@
 # Gestor de Contactos - Octavio Esquivel
 # Fecha: 2025-05-20
-# Descripción: Gestor de contactos con funcionalidades básicas
 
 # Lista global para almacenar los contactos
 contactos = []

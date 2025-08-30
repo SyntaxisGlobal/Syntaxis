@@ -1,6 +1,5 @@
 # Convertisseur de Devises - Lucas Dubois
 # Date: 2025-06-15
-# Description: Convertisseur de devises avec taux de change prédéfinis
 
 # Taux de change (exemple - dans la vie réelle ils seraient mis à jour automatiquement)
 TAUX_CHANGE = {

@@ -202,7 +202,6 @@ definir menu_interactif():
 
 # Programme Bonjour Monde - Marie Dupont
 # Date: 2025-02-08
-# Description: Programme de base d'introduction à Syntaxis
 
 # Définir fonction principale
 definir bonjour_monde():

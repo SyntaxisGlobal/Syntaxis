@@ -2,7 +2,7 @@
 
 **Syntaxis** es un sistema innovador que permite escribir código Python usando sintaxis en español, haciendo la programación más accesible para hispanohablantes.
 
-## 🚀 Características Principales
+## Características Principales
 
 - **Sintaxis en Español**: Escribe código usando palabras clave en español
 - **Traducción Automática**: Convierte automáticamente a Python estándar
@@ -10,7 +10,7 @@
 - **Soporte Completo**: Maneja estructuras complejas, decoradores, metaclases y más
 - **Validación de Sintaxis**: Detecta errores antes de la ejecución
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 espanol/
@@ -26,7 +26,7 @@ espanol/
     └── gestor_notas_soraya_morales_2025_07_25.synt
 ```
 
-## 🛠️ Instalación y Uso
+## Instalación y Uso
 
 ### Requisitos
 - Python 3.7 o superior
@@ -51,7 +51,7 @@ espanol/
    traducir_archivo("programa.synt", "programa.py")
    ```
 
-## 📚 Sintaxis de Syntaxis
+## Sintaxis de Syntaxis
 
 ### Palabras Clave Principales
 
@@ -86,39 +86,7 @@ definir saludar(nombre):
 #         print("¡Hola desconocido!")
 ```
 
-## 🎯 Programas de Ejemplo
-
-### 1. Hola Mundo
-- **Archivo**: `hola_mundo_leandro_villasenor_2025_02_07.synt`
-- **Autor**: Leandro Villaseñor
-- **Descripción**: Programa básico de introducción
-
-### 2. Calculadora
-- **Archivo**: `calculadora_dario_cifuentes_2025_02_15.synt`
-- **Autor**: Dario Cifuentes
-- **Descripción**: Calculadora básica con operaciones aritméticas
-
-### 3. Conversor de Monedas
-- **Archivo**: `conversor_monedas_luis_hernandez_2025_03_15.synt`
-- **Autor**: Luis Hernández
-- **Descripción**: Convierte entre diferentes monedas
-
-### 4. Juego de Adivinanza
-- **Archivo**: `juego_adivinanza_inaki_cordero_2025_04_15.synt`
-- **Autor**: Iñaki Cordero
-- **Descripción**: Juego interactivo de adivinanza
-
-### 5. Gestor de Contactos
-- **Archivo**: `gestor_contactos_octavio_esquivel_2025_05_20.synt`
-- **Autor**: Octavio Esquivel
-- **Descripción**: Sistema de gestión de contactos
-
-### 6. Gestor de Notas
-- **Archivo**: `gestor_notas_soraya_morales_2025_07_25.synt`
-- **Autor**: Soraya Morales
-- **Descripción**: Sistema de gestión de notas
-
-## 🔧 Características Avanzadas
+## Características Avanzadas
 
 ### Contexto de Traducción
 - Manejo de scopes anidados
@@ -135,36 +103,13 @@ definir saludar(nombre):
 - Mensajes de error en español
 - Sugerencias de corrección
 
-## 📖 Cómo Funciona
+## Cómo Funciona
 
 1. **Análisis Léxico**: El código .synt se convierte en tokens
 2. **Análisis Sintáctico**: Se valida la estructura del código
 3. **Traducción**: Se aplican las reglas de traducción
 4. **Generación**: Se produce código Python válido
 5. **Ejecución**: Se ejecuta el código Python resultante
-
-## 🤝 Contribuir
-
-Para contribuir al proyecto:
-
-1. Crea programas de ejemplo en la carpeta `programas/`
-2. Usa el formato: `nombre_programa_autor_fecha.synt`
-3. Incluye comentarios descriptivos en español
-4. Prueba tu código antes de contribuir
-
-## 📝 Licencia
-
-Este proyecto es parte del sistema Syntaxis y está disponible bajo licencia abierta.
-
-## 🆘 Soporte
-
-Si tienes problemas o preguntas:
-
-1. Revisa los programas de ejemplo
-2. Consulta la documentación del traductor
-3. Verifica que tu sintaxis sea correcta
-4. Usa el ejecutor interactivo para debugging
-
 ---
 
-**¡Disfruta programando en español con Syntaxis! 🎉**
+**¡Disfruta programando en español con Syntaxis!**

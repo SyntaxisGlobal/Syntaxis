@@ -1,6 +1,5 @@
 # Calculatrice - Pierre Martin
 # Date: 2025-03-12
-# Description: Calculatrice basique avec opérations mathématiques
 
 definir afficher_menu():
     """Affiche le menu des opérations disponibles"""

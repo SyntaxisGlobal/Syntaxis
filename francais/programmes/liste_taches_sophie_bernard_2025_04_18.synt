@@ -1,6 +1,5 @@
 # Liste de Tâches - Sophie Bernard
 # Date: 2025-04-18
-# Description: Gestionnaire de tâches simple
 
 # Liste globale pour almacenar las tareas
 taches = []

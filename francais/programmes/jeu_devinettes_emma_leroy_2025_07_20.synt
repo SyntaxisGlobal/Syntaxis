@@ -1,6 +1,5 @@
 # Jeu de Devinettes - Emma Leroy
 # Date: 2025-07-20
-# Description: Jeu simple de devinettes de nombres
 
 importer random
 

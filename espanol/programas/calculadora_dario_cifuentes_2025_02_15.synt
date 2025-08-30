@@ -1,6 +1,5 @@
 # Calculadora - Darío Cifuentes
 # Fecha: 2025-02-15
-# Descripción: Calculadora básica con operaciones matemáticas
 
 definir mostrar_menu():
     """Muestra el menú de operaciones disponibles"""

@@ -1,6 +1,5 @@
 # Gestor de Notas - Soraya Morales
 # Fecha: 2025-07-25
-# Descripción: Gestor de notas con funcionalidades básicas
 
 # Lista global para almacenar las notas
 notas = []
