@@ -1,5 +1,4 @@
-# Convertisseur de Devises - Lucas Dubois
-# Date: 2025-06-15
+
 
 # Taux de change (exemple - dans la vie réelle ils seraient mis à jour automatiquement)
 TAUX_CHANGE = {

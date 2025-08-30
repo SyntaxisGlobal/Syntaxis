@@ -1,35 +1,87 @@
 # Syntaxis
 
-A multilingual programming language designed to help Spanish and French speakers learn Python using their native language as a bridge to English.
+**Syntaxis** is a multilingual programming system that allows you to write Python code using Spanish or French keywords. It automatically translates your code to standard Python and executes it.
 
-## Overview
+## What It Does
 
-Syntaxis provides a natural language interface for programming, allowing users to write code in Spanish or French while learning Python syntax and concepts. The language includes built-in translation capabilities and educational features.
+- Write code in Spanish or French instead of English
+- Automatically converts to Python
+- Run programs immediately
+- Learn Python concepts in your native language
 
-## Features
+## Quick Start
 
-- **Multilingual Support**: Write code in Spanish, French, or English
-- **Python Integration**: Seamless translation to Python code
-- **Educational Tools**: Built-in learning resources and examples
-- **Open Source**: Community-driven development and contributions
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/SyntaxisGlobal/Syntaxis.git
+   cd Syntaxis
+   ```
 
-## Structure
+2. **Choose your language**
+   - **Spanish**: `cd espanol`
+   - **French**: `cd francais`
 
-- `espanol/` - Spanish language programs and tools
-- `francais/` - French language programs and tools
-- `README.md` - Project documentation
+3. **Run a program**
+   ```bash
+   # Spanish
+   python run_syntaxis.py
+   
+   # French
+   python executeur_syntaxis.py
+   ```
 
-## Getting Started
+## Basic Syntax
 
-1. Choose your preferred language directory
-2. Run the appropriate executor script
-3. Write Syntaxis code in your native language
-4. Execute and learn Python concepts
+### Spanish Keywords
+- `definir` = `def` (define function)
+- `si` = `if` (if condition)
+- `sino` = `else` (else)
+- `para` = `for` (for loop)
+- `mientras` = `while` (while loop)
+- `imprimir` = `print` (print)
+- `entrada` = `input` (input)
 
-## Contributing
+### French Keywords
+- `definir` = `def` (define function)
+- `si` = `if` (if condition)
+- `sinon` = `else` (else)
+- `pour` = `for` (for loop)
+- `tant_que` = `while` (while loop)
+- `afficher` = `print` (print)
+- `entree` = `input` (input)
 
-We welcome contributions from the community! Please see the language-specific directories for contribution guidelines.
+## Example
+
+```python
+# Spanish
+definir saludar(nombre):
+    si nombre:
+        imprimir(f"¡Hola {nombre}!")
+    sino:
+        imprimir("¡Hola desconocido!")
+
+# French
+definir saluer(nom):
+    si nom:
+        afficher(f"Bonjour {nom}!")
+    sinon:
+        afficher("Bonjour inconnu!")
+```
+
+## Project Structure
+
+```
+Syntaxis/
+├── espanol/          # Spanish programs and translator
+├── francais/         # French programs and translator
+└── README.md         # This file
+```
+
+## Requirements
+
+- Python 3.7 or higher
+- No external dependencies
 
 ## License
 
-This project is open source and available under the MIT License.
+

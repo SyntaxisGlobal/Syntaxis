@@ -1,5 +1,4 @@
-# Liste de Tâches - Sophie Bernard
-# Date: 2025-04-18
+
 
 # Liste globale pour almacenar las tareas
 taches = []

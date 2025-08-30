@@ -1,5 +1,4 @@
-# Calculatrice - Pierre Martin
-# Date: 2025-03-12
+
 
 definir afficher_menu():
     """Affiche le menu des opérations disponibles"""

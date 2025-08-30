@@ -200,8 +200,7 @@ definir menu_interactif():
         sinon:
             afficher("Option invalide. Veuillez choisir entre 1 et 6.")
 
-# Programme Bonjour Monde - Marie Dupont
-# Date: 2025-02-08
+
 
 # Définir fonction principale
 definir bonjour_monde():

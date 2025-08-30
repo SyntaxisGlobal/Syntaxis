@@ -1,5 +1,4 @@
-# Gestor de Notas - Soraya Morales
-# Fecha: 2025-07-25
+
 
 # Lista global para almacenar las notas
 notas = []

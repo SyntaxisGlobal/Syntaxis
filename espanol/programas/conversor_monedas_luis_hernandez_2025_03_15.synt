@@ -1,5 +1,4 @@
-# Conversor de Monedas - Luis Hernández
-# Fecha: 2025-03-15
+
 
 # Tasas de cambio (ejemplo - en la vida real se actualizarían automáticamente)
 TASAS_CAMBIO = {

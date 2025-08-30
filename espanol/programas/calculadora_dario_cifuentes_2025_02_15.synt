@@ -1,5 +1,4 @@
-# Calculadora - Darío Cifuentes
-# Fecha: 2025-02-15
+
 
 definir mostrar_menu():
     """Muestra el menú de operaciones disponibles"""
